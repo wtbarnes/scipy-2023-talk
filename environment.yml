@@ -1,0 +1,14 @@
+name: scipy-2023-talk
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - sunpy[all]
+    - ipykernel
+#    - scregistry
+    - dask
+    - distributed
+    - sunkit-image
+    - s3fs
