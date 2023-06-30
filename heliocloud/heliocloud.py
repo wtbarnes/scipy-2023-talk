@@ -14,8 +14,8 @@ import astropy.table
 import sunpy.net.attrs as a
 from sunpy.net.attr import and_
 from sunpy.net.base_client import BaseClient, QueryResponseTable
-from sunpy.net.heliocloud.attrs import Dataset
-from sunpy.net.heliocloud.walker import walker
+from .attrs import Dataset
+from .walker import walker
 
 __all__ = ['HelioCloudClient']
 

@@ -1,6 +1,6 @@
 from sunpy.net.attr import AttrAnd, AttrOr, AttrWalker
 from sunpy.net.attrs import Time, Wavelength
-from sunpy.net.heliocloud.attrs import Dataset
+from .attrs import Dataset
 
 walker = AttrWalker()
 
