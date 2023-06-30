@@ -6,6 +6,7 @@ dependencies:
   - pip
   - pip:
     - sunpy[all]
+    - ndcube
     - sunkit-image
     - ipykernel
     - s3fs
