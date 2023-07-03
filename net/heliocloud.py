@@ -20,7 +20,8 @@ from .walker import walker
 __all__ = ['HelioCloudClient']
 
 _HC_DATE_FMT = '%Y%m%d'
-_HC_BASEURL = 'https://s3.amazonaws.com/gov-nasa-hdrl-data1/'
+#_HC_BASEURL = 'https://s3.amazonaws.com/gov-nasa-hdrl-data1/'
+_HC_BASEURL = 's3://gov-nasa-hdrl-data1/'
 
 class HelioCloudClient(BaseClient):
     """
@@ -128,12 +129,13 @@ class HelioCloudClient(BaseClient):
         query_attrs = {type(x) for x in query}
         return required == query_attrs
 
-    @classmethod
-    def _attrs_module(cls):
-        return 'heliocloud', 'sunpy.net.heliocloud.attrs'
-
-    @classmethod
-    def register_values(cls):
-        from sunpy.net import attrs as a
-
-        return {a.heliocloud.Dataset: [("AIA", "AIA data")]}
+#    @classmethod
+#    def _attrs_module(cls):
+#        return 'heliocloud', 'sunpy.net.heliocloud.attrs'
+#
+#    @classmethod
+#    def register_values(cls):
+#        from sunpy.net import attrs as a
+#
+#        return {a.heliocloud.Dataset: [("AIA", "AIA data")]}
+#
