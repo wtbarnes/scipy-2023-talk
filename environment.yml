@@ -9,6 +9,7 @@ dependencies:
     - ndcube
     - sunkit-image
     - ipykernel
+    - jupyter
     - s3fs
     - boto3
     - dask-gateway

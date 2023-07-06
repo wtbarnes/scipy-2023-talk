@@ -1,3 +1,5 @@
+slides_files
+*.html
 *_cache
 
 # Byte-compiled / optimized / DLL files

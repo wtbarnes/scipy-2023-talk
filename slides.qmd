@@ -1,0 +1,89 @@
+---
+title: "Seeing the Sun through the Clouds: Accelerating the SunPy Data Analysis Ecosystem with Dask"
+subtitle: SciPy / Austin, TX / 12 July 2023
+authors:
+- Will Barnes
+- Nabil Freij
+- Jack Ireland
+- Stuart Mumford
+institute:
+- AU/NASA GSFC
+- BAERI/LMSAL
+- NASA GSFC
+- Aperio Software
+format:
+  revealjs:
+    margin: 0
+    width: 100%
+    height: 100%
+    theme: [default, theme/sunpy-theme.scss]
+    logo: static/sunpy_logo_landscape.svg
+    footer: "[wtbarnes.github.io/scipy-2023-talk](https://wtbarnes.github.io/scipy-2023-talk)"
+title-slide-attributes: 
+  data-background-image: static/sunpy_icon.svg
+  data-background-position: -100% 50%
+  data-background-opacity: 50%
+  data-background-size: 80%
+---
+
+# <span style="color:white;">What is solar physics?</span> {background-video="static/heliophysics_fleet_capture_erup_cme_1280x720.mp4" background-video-loop="true" background-video-muted="true"}
+
+---
+
+## The Coronal Heating Problem
+
+::: {.notes}
+- Show 1600 Å and 171 Å images
+- Denote corresponding temperatures
+- Note that temperature increases from surface to corona
+:::
+
+## How do we do solar physics?
+
+- Look at the atmosphere in EUV and X-ray wavelengths
+- Study areas of intense magnetic activity as a function of time
+
+::: {.notes}
+- Show zoom in of active region for many wavelengths
+:::
+
+## Use sunpy!
+
+*“The community-developed, free and open-source solar data analysis environment for Python.”*
+
+![](static/tour.svg){fig-align="center" height="25em"}
+
+::: {.notes}
+- Intro to project
+- Built on Astropy
+- Brief history
+- Affiliated packages
+:::
+
+## Searching for Data with SunPy
+
+## Loading Data with SunPy
+
+## Transforming Data with SunPy
+
+## Analyzing Data
+
+## Challenging at Scale
+
+- Many timesteps means many files
+- Hard to download, hard to deliver
+- FITS files are not cloud ready
+
+## HelioCloud
+
+# Now, a Demo
+
+## Some painpoints remain...
+
+- Making a Dask array from a FITS array lazily is still hard
+- Awkward interface between "Dask aware" operations and custom functions implemented using lower-level Dask operations
+- Incompatibility between xarray and WCS approaches to coordinates systems
+- Incompatibility between astropy units and Dask, i.e. cannot have a `Quantity` backed by a Dask array
+
+## Summary
+
