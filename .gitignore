@@ -1,3 +1,4 @@
+/.quarto/
 slides_files
 *.html
 *_cache
