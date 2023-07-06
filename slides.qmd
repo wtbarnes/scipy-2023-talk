@@ -83,7 +83,7 @@ title-slide-attributes:
 ::: {.columns}
 ::: {.column width="70%"}
 - NASA-funded computing environment on AWS
-- Jupyter Lab interface as well as ability 
+- Jupyter Lab interface as well as ability spin up custom VM instances
 :::
 ::: {.column width="30%"}
 ![](static/heliocloud_logo.png){height="10em" fig-align="center"}
