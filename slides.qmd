@@ -60,6 +60,10 @@ title-slide-attributes:
 - Affiliated packages
 :::
 
+## The SunPy Project
+
+![](static/sunpy_ecosystem.svg){fig-align="center" height="25em"}
+
 ## Searching for Data with SunPy
 
 ## Loading Data with SunPy
@@ -76,7 +80,17 @@ title-slide-attributes:
 
 ## HelioCloud
 
-# Now, a Demo
+::: {.columns}
+::: {.column width="70%"}
+- NASA-funded computing environment on AWS
+- Jupyter Lab interface as well as ability 
+:::
+::: {.column width="30%"}
+![](static/heliocloud_logo.png){height="10em" fig-align="center"}
+:::
+:::
+
+# Live Demo 🤞 {background-image="static/sunpy_icon.svg" background-opacity="50%"}
 
 ## Some painpoints remain...
 
