@@ -1,1 +1,1 @@
-sunpy[map]
+sunpy[net,map]
