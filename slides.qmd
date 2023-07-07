@@ -24,6 +24,7 @@ title-slide-attributes:
   data-background-position: -100% 50%
   data-background-opacity: 50%
   data-background-size: 80%
+code-annotations: below
 ---
 
 # <span style="color:white;">What is solar physics?</span> {background-video="static/heliophysics_fleet_capture_erup_cme_1280x720.mp4" background-video-loop="true" background-video-muted="true"}
@@ -45,32 +46,114 @@ title-slide-attributes:
 
 ::: {.notes}
 - Show zoom in of active region for many wavelengths
+- Maybe just pull a video from HV
 :::
 
 ## Use sunpy!
 
 *“The community-developed, free and open-source solar data analysis environment for Python.”*
 
-![](static/tour.svg){fig-align="center" height="25em"}
+::: {layout="[[1], [-1], [-1]]"}
+![](static/tour.svg){fig-align="center" width=1300}
+:::
 
 ::: {.notes}
 - Intro to project
 - Built on Astropy
 - Brief history
-- Affiliated packages
 :::
 
 ## The SunPy Project
 
-![](static/sunpy_ecosystem.svg){fig-align="center" height="25em"}
+::: {layout="[[1], [-1], [-1]]"}
+![](static/sunpy_ecosystem.svg){fig-align="center" width=1300}
+:::
+
+::: {.notes}
+- Affiliated packages summary
+- For working with specific instruments or doing specific analyses
+- Interoperable ecosystem
+- [sunpy.org/affiliated](https://sunpy.org/affiliated)
+:::
 
 ## Searching for Data with SunPy
 
+```{python}
+import os
+os.environ["PARFIVE_HIDE_PROGRESS"] = "True"
+```
+
+```{python}
+#| echo: true
+#| output-location: column-fragment
+from sunpy.net import Fido, attrs as a
+import astropy.units as u
+
+query = Fido.search(                                 # <1>
+  a.Time('2018-05-29 18:00', '2018-05-29 18:00:10'), # <1>
+  a.Wavelength(171*u.angstrom),                      # <1>
+  a.Instrument.aia                                   # <1>
+)                                                    # <1> 
+print(query)
+```
+1. Search remote repository for AIA 171 Å images between 18:00 and 18:10 on May 29 2018.
+
+```{python}
+#| echo: true
+#| output-location: column-fragment
+files = Fido.fetch(query, path='data/{instrument}') # <2>
+print(files)
+```
+2. Download all FITS files corresponding to this search result to `data/AIA`.
+
 ## Loading Data with SunPy
+
+```{python}
+#| echo: true
+#| output-location: fragment
+#| fig-align: center
+import sunpy.map
+
+m = sunpy.map.Map(files)
+m.peek()
+```
+
+## Loading Data with SunPy
+
+```{python}
+#| echo: true
+#| output-location: column-fragment
+print(m.detector)
+print(m.wavelength)
+print(m.date)
+print(m.observer_coordinate)
+```
+
+```{python}
+#| echo: true
+#| output-location: column-fragment
+from astropy.coordinates import SkyCoord
+
+corner = SkyCoord(Tx=-375*u.arcsec, Ty=0*u.arcsec,
+                  frame=m.coordinate_frame)
+print(m.world_to_pixel(corner))
+m_cutout = m.submap(corner,
+                    width=500*u.arcsec,
+                    height=500*u.arcsec)
+m_cutout.peek()
+```
 
 ## Transforming Data with SunPy
 
+::: {.notes}
+Show something here about how we need to correct for rotation of the Sun, observers at different location/different coordinate systems
+:::
+
 ## Analyzing Data
+
+::: {.notes}
+Maybe just show basic infographic of 
+:::
 
 ## Challenging at Scale
 
@@ -78,15 +161,27 @@ title-slide-attributes:
 - Hard to download, hard to deliver
 - FITS files are not cloud ready
 
-## HelioCloud
+## HelioCloud--Science Platform for Heliophysics
 
 ::: {.columns}
-::: {.column width="70%"}
-- NASA-funded computing environment on AWS
-- Jupyter Lab interface as well as ability spin up custom VM instances
+::: {.column width="55%"}
+- NASA-funded **common data analysis environment for heliophysics** on AWS
+- Aligns with NASA **Transform to Open Science (TOPS)** initiative 
+- **Jupyter Lab** interface + custom VM instances
+- ~1 Pb of heliophysics data **colocated** in S3
+- Open to NASA scientists + collaborators--**no NASA credentials needed**
+- **Dask Gateway** for easy cluster provisioning
 :::
-::: {.column width="30%"}
-![](static/heliocloud_logo.png){height="10em" fig-align="center"}
+::: {.column width="45%"}
+:::{layout="[[100],[33,33,33]]"}
+![](static/heliocloud_logo.png)
+
+![](static/jupyter_logo.png)
+
+![](static/dask_logo.svg)
+
+![](static/sunpy_icon.svg)
+:::
 :::
 :::
 
