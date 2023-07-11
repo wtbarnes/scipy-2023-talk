@@ -29,18 +29,26 @@ code-annotations: below
 
 # <span style="color:white;">What is solar physics?</span> {background-video="https://svs.gsfc.nasa.gov/vis/a030000/a030000/a030072/heliophysics_fleet_capture_erup_cme_1280x720.mp4" background-video-loop="true" background-video-muted="true"}
 
+::: {.notes}
+- Astronomy/astrophysics of the Sun
+- Can study our star in greater detail than any other
+- Impact on space weather on the earth
+- A laboratory for astrophysics, fundamental plasma physics, and more!
+:::
+
 # {background-image="static/corona_image.png"}
 
 ::: footer
 Image Credit: [NASA APOD/Reinhold Wittich](https://apod.nasa.gov/apod/ap230516.html)
 :::
 
-## Why is the Corona So Hot?
-
 ::: {.notes}
-- Show 1600 Å and 171 Å images
-- Denote corresponding temperatures
-- Note that temperature increases from surface to corona
+- Humans have observed eclipses for many thousands of years
+- Corona visible to naked eye only during eclipses
+- Note that temperature increases from surface to corona by many orders of magnitude
+- But why? how?
+- Why is the Corona So Hot?
+- To solve this, we don't need to wait for eclipses anymore...(lead into EUV observations)
 :::
 
 # { background-video="https://api.helioviewer.org/cache/movies/2023/07/10/1SDn5/2018_05_29_00_07_33_2018_05_30_00_02_45_AIA_171.mp4" background-video-loop="true" background-video-muted="true"}
@@ -48,6 +56,17 @@ Image Credit: [NASA APOD/Reinhold Wittich](https://apod.nasa.gov/apod/ap230516.h
 # { background-video="https://api.helioviewer.org/cache/movies/2023/07/10/WSDn5/2018_05_29_00_07_34_2018_05_30_00_02_58_AIA_211.mp4" background-video-loop="true" background-video-muted="true"}
 
 ::: {.notes}
+- Magnetic field holds the key to why the corona is heated to million degree temperatures
+- Plasma trapped along field lines
+- Twisted magnetic field releases energy into the plasma, thereby heating it
+- We can start to understand this system by observing these areas of intense magnetic activity at different wavelengths as a function of time
+- There's a lot of data and we need tools to wrangle and analyze all of this data
+- AIA
+  - 12 s cadence
+  - 7 EUV channels
+  - 4K-by-4K images
+  - 2010--now
+  - Produces ~2 TB / day (!)
 :::
 
 ## Solar Physics in Python with `sunpy`!
@@ -60,6 +79,10 @@ Image Credit: [NASA APOD/Reinhold Wittich](https://apod.nasa.gov/apod/ap230516.h
 ![](static/astropy_logo.png){.fragment fig-align="center" width=300}
 :::
 
+::: footer
+[sunpy.org](https://sunpy.org) / [github.com/sunpy/sunpy](https://github.com/sunpy/sunpy) / [docs.sunpy.org](https://docs.sunpy.org)
+:::
+
 ::: {.notes}
 - Intro to project
 - Built on Astropy
@@ -67,7 +90,7 @@ Image Credit: [NASA APOD/Reinhold Wittich](https://apod.nasa.gov/apod/ap230516.h
 - Add overlay of astropy logo
 :::
 
-## The SunPy Project
+## The SunPy Ecosystem
 
 ::: {layout="[[1], [-1], [-1]]"}
 ![](static/sunpy_ecosystem.svg){fig-align="center" width=1300}
@@ -85,12 +108,14 @@ Image Credit: [NASA APOD/Reinhold Wittich](https://apod.nasa.gov/apod/ap230516.h
 ```{python}
 import os
 import glob
+import matplotlib.pyplot as plt
 os.environ["PARFIVE_HIDE_PROGRESS"] = "True"
 ```
 
 ```{python}
 #| echo: true
 #| output-location: column-fragment
+#| eval: false
 from sunpy.net import Fido, attrs as a
 import astropy.units as u
 
@@ -106,6 +131,7 @@ print(query)
 ```{python}
 #| echo: true
 #| output-location: column-fragment
+#| eval: false
 files = Fido.fetch(query, path='data/{instrument}') # <2>
 print(files)
 ```
@@ -114,8 +140,9 @@ print(files)
 ## Loading Data with `sunpy`
 
 ```{python}
-if len(files) == 0:
-  files = glob.glob('data/AIA/*.fits')
+#if len(files) == 0:
+import astropy.units as u
+files = glob.glob('data/AIA/*.fits')
 ```
 
 ```{python}
@@ -156,25 +183,59 @@ m_cutout.peek()
 ## Transforming Data with `sunpy`
 
 ```{python}
+#| output: true
+#| output-location: fragment
+#| echo: true 
+#| fig-align: center
+from sunpy.coordinates import propagate_with_solar_surface
+m_seq = sunpy.map.Map('data/sequence/*.fits', sequence=True)
+fig = plt.figure(figsize=(16, 4))
+for i, m in enumerate(m_seq):
+  ax = fig.add_subplot(1, len(m_seq), i+1, projection=m)
+  m.plot(axes=ax)
+  with propagate_with_solar_surface():
+    blc = m_cutout.bottom_left_coord.transform_to(m.coordinate_frame)
+    trc = m_cutout.top_right_coord.transform_to(m.coordinate_frame)
+  m.draw_quadrangle(blc, top_right=trc)
 ```
 
+## Transforming Data with `sunpy`
+
+```{python}
+#| output: true
+#| output-location: fragment
+#| echo: true 
+#| fig-align: center
+#| code-line-numbers: "|1,2"
+with propagate_with_solar_surface():
+  m_seq_aligned = sunpy.map.Map([m.reproject_to(m_cutout.wcs) for m in m_seq], sequence=True)
+fig = plt.figure(figsize=(16, 4))
+for i, m in enumerate(m_seq_aligned):
+  ax = fig.add_subplot(1,len(m_seq_aligned), i+1, projection=m)
+  m.plot(axes=ax, cmap='sdoaia171', title=m_seq[i].date)
+```
+
+:::{.incremental}
+* Align all images to the **World Coordinate System (WCS)** of the cutout
+* Removes motion due to observer shift, rotatation of the Sun
+:::
+
 ::: {.notes}
-Show something here about how we need to correct for rotation of the Sun, observers at different location/different coordinate systems
 :::
 
 ## Challenging at Scale
 
 ::: {.incremental}
-- Analyzing time-dynamics of plasma requires many files 
+- Analyzing time-dynamics of plasma requires **many files**
   - Delivering and downloading many individual files to users is difficult
   - $12\,\mathrm{h}/12\,\mathrm{s}\times6=21,600$ files
 - Instantiating many rich `Map` objects is difficult
   - $\approx130$ MB per file, $\approx3$ TB per dataset
   - Even analyzing a subset of the data requires loading the whole image
-- Lots of processing required to align and stack images into "data cubes"
+- Lots of processing required to **align and stack images into "data cubes"**
   - Large computing burden placed on user
   - Physical constraints make "analysis-ready" data products challenging
-- Trade-off between exploratory data analysis and "batch processing"
+- Trade-off between **exploratory data analysis** and "batch processing"
 :::
 
 ## HelioCloud--Science Platform for Heliophysics
@@ -205,10 +266,31 @@ Show something here about how we need to correct for rotation of the Sun, observ
 
 ## Some painpoints remain...
 
-- Making a Dask array from a FITS array lazily is still hard
-- Awkward interface between "Dask aware" operations and custom functions implemented using lower-level Dask operations
-- Incompatibility between xarray and WCS approaches to coordinates systems
-- Incompatibility between astropy units and Dask, i.e. cannot have a `Quantity` backed by a Dask array
+:::{.incremental}
+- Directly instantiating `Map` objects backed by Dask arrays is awkward
+  - Creating Dask arrays from FITS files is awkward
+  - `Map` does not have "first-class" support for S3 URLs
+- Some `Map` methods still require "eager" execution
+  - Requires writing custom `@dask.delayed` functions that reimplement existing methods
+  - Friction when moving from local/in-memory environment to parallel/distributed environment
+- Incompatibility between `xarray` and WCS approaches to coordinates systems
+- Friction between `astropy.units` and Dask
+  - Cannot have a `Quantity` backed by a Dask array
+  - Dask does not correctly serialize `Quantity` objects
+:::
+
+::: {.notes}
+- Maybe reference particular issues/PRs that are addressing these painpoints? across astropy, dask, sunpy
+:::
 
 ## Summary
 
+- Analyzing solar physics data requires **large volumes** ($\sim$ TB), **many files** ($>10^4$)
+- **SunPy Ecosystem** provide Python tools for searching for, loading, transforming, and analyzing solar data
+- HelioCloud platform eliminates need for data download, **brings data to compute**, provides scalable compute via AWS and Dask
+- HelioCloud + `sunpy` + `dask` = Science result from L1 data in **minutes**
+- Challenges remain in reducing friction between Astronomy-in-Python ecosystem and Dask, but **progress being made!**
+- Resources
+  - Website: [sunpy.org](https://sunpy.org)
+  - GitHub: [github.com/sunpy/sunpy](https://github.com/sunpy/sunpy)
+- Built with ![](static/quarto_logo.png){height=40}
