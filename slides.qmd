@@ -27,11 +27,15 @@ title-slide-attributes:
 code-annotations: below
 ---
 
-# <span style="color:white;">What is solar physics?</span> {background-video="static/heliophysics_fleet_capture_erup_cme_1280x720.mp4" background-video-loop="true" background-video-muted="true"}
+# <span style="color:white;">What is solar physics?</span> {background-video="https://svs.gsfc.nasa.gov/vis/a030000/a030000/a030072/heliophysics_fleet_capture_erup_cme_1280x720.mp4" background-video-loop="true" background-video-muted="true"}
 
----
+# {background-image="static/corona_image.png"}
 
-## The Coronal Heating Problem
+::: footer
+Image Credit: [NASA APOD/Reinhold Wittich](https://apod.nasa.gov/apod/ap230516.html)
+:::
+
+## Why is the Corona So Hot?
 
 ::: {.notes}
 - Show 1600 Å and 171 Å images
@@ -39,28 +43,28 @@ code-annotations: below
 - Note that temperature increases from surface to corona
 :::
 
-## How do we do solar physics?
+# { background-video="https://api.helioviewer.org/cache/movies/2023/07/10/1SDn5/2018_05_29_00_07_33_2018_05_30_00_02_45_AIA_171.mp4" background-video-loop="true" background-video-muted="true"}
 
-- Look at the atmosphere in EUV and X-ray wavelengths
-- Study areas of intense magnetic activity as a function of time
+# { background-video="https://api.helioviewer.org/cache/movies/2023/07/10/WSDn5/2018_05_29_00_07_34_2018_05_30_00_02_58_AIA_211.mp4" background-video-loop="true" background-video-muted="true"}
 
 ::: {.notes}
-- Show zoom in of active region for many wavelengths
-- Maybe just pull a video from HV
 :::
 
-## Use sunpy!
+## Solar Physics in Python with `sunpy`!
 
 *“The community-developed, free and open-source solar data analysis environment for Python.”*
 
-::: {layout="[[1], [-1], [-1]]"}
-![](static/tour.svg){fig-align="center" width=1300}
+::: {.r-stack}
+![](static/tour.svg){.fragment fig-align="center" width=1750}
+
+![](static/astropy_logo.png){.fragment fig-align="center" width=300}
 :::
 
 ::: {.notes}
 - Intro to project
 - Built on Astropy
 - Brief history
+- Add overlay of astropy logo
 :::
 
 ## The SunPy Project
@@ -76,10 +80,11 @@ code-annotations: below
 - [sunpy.org/affiliated](https://sunpy.org/affiliated)
 :::
 
-## Searching for Data with SunPy
+## Searching for Data with `sunpy`
 
 ```{python}
 import os
+import glob
 os.environ["PARFIVE_HIDE_PROGRESS"] = "True"
 ```
 
@@ -106,7 +111,12 @@ print(files)
 ```
 2. Download all FITS files corresponding to this search result to `data/AIA`.
 
-## Loading Data with SunPy
+## Loading Data with `sunpy`
+
+```{python}
+if len(files) == 0:
+  files = glob.glob('data/AIA/*.fits')
+```
 
 ```{python}
 #| echo: true
@@ -118,7 +128,7 @@ m = sunpy.map.Map(files)
 m.peek()
 ```
 
-## Loading Data with SunPy
+## Inspecting Data with `sunpy`
 
 ```{python}
 #| echo: true
@@ -143,23 +153,29 @@ m_cutout = m.submap(corner,
 m_cutout.peek()
 ```
 
-## Transforming Data with SunPy
+## Transforming Data with `sunpy`
+
+```{python}
+```
 
 ::: {.notes}
 Show something here about how we need to correct for rotation of the Sun, observers at different location/different coordinate systems
 :::
 
-## Analyzing Data
-
-::: {.notes}
-Maybe just show basic infographic of 
-:::
-
 ## Challenging at Scale
 
-- Many timesteps means many files
-- Hard to download, hard to deliver
-- FITS files are not cloud ready
+::: {.incremental}
+- Analyzing time-dynamics of plasma requires many files 
+  - Delivering and downloading many individual files to users is difficult
+  - $12\,\mathrm{h}/12\,\mathrm{s}\times6=21,600$ files
+- Instantiating many rich `Map` objects is difficult
+  - $\approx130$ MB per file, $\approx3$ TB per dataset
+  - Even analyzing a subset of the data requires loading the whole image
+- Lots of processing required to align and stack images into "data cubes"
+  - Large computing burden placed on user
+  - Physical constraints make "analysis-ready" data products challenging
+- Trade-off between exploratory data analysis and "batch processing"
+:::
 
 ## HelioCloud--Science Platform for Heliophysics
 
@@ -168,7 +184,7 @@ Maybe just show basic infographic of
 - NASA-funded **common data analysis environment for heliophysics** on AWS
 - Aligns with NASA **Transform to Open Science (TOPS)** initiative 
 - **Jupyter Lab** interface + custom VM instances
-- ~1 Pb of heliophysics data **colocated** in S3
+- ~1 Pb of heliophysics data in S3 storage--data and compute are **colocated**
 - Open to NASA scientists + collaborators--**no NASA credentials needed**
 - **Dask Gateway** for easy cluster provisioning
 :::
