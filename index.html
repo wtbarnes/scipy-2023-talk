@@ -428,13 +428,20 @@ Stuart Mumford
 </div>
 
 </section>
-<section>
-<section id="what-is-solar-physics" class="title-slide slide level1 center" data-background-video="static/heliophysics_fleet_capture_erup_cme_1280x720.mp4" data-background-video-loop="true" data-background-video-muted="true">
+<section id="what-is-solar-physics" class="title-slide slide level1 center" data-background-video="https://svs.gsfc.nasa.gov/vis/a030000/a030000/a030072/heliophysics_fleet_capture_erup_cme_1280x720.mp4" data-background-video-loop="true" data-background-video-muted="true">
 <h1><span style="color:white;">What is solar physics?</span></h1>
 
 </section>
-<section id="the-coronal-heating-problem" class="slide level2">
-<h2>The Coronal Heating Problem</h2>
+
+<section>
+<section id="section" class="title-slide slide level1 center" data-background-image="static/corona_image.png">
+<h1></h1>
+<div class="footer">
+<p>Image Credit: <a href="https://apod.nasa.gov/apod/ap230516.html">NASA APOD/Reinhold Wittich</a></p>
+</div>
+</section>
+<section id="why-is-the-corona-so-hot" class="slide level2">
+<h2>Why is the Corona So Hot?</h2>
 <aside class="notes">
 <ul>
 <li>Show 1600 Å and 171 Å images</li>
@@ -452,18 +459,17 @@ Stuart Mumford
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
+</section></section>
+<section id="section-1" class="title-slide slide level1 center" data-background-video="https://api.helioviewer.org/cache/movies/2023/07/10/1SDn5/2018_05_29_00_07_33_2018_05_30_00_02_45_AIA_171.mp4" data-background-video-loop="true" data-background-video-muted="true">
+<h1></h1>
+
 </section>
-<section id="how-do-we-do-solar-physics" class="slide level2">
-<h2>How do we do solar physics?</h2>
-<ul>
-<li>Look at the atmosphere in EUV and X-ray wavelengths</li>
-<li>Study areas of intense magnetic activity as a function of time</li>
-</ul>
+
+<section>
+<section id="section-2" class="title-slide slide level1 center" data-background-video="https://api.helioviewer.org/cache/movies/2023/07/10/WSDn5/2018_05_29_00_07_34_2018_05_30_00_02_58_AIA_211.mp4" data-background-video-loop="true" data-background-video-muted="true">
+<h1></h1>
 <aside class="notes">
-<ul>
-<li>Show zoom in of active region for many wavelengths</li>
-<li>Maybe just pull a video from HV</li>
-</ul>
+
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -476,18 +482,19 @@ Stuart Mumford
           display:block!important;
       }</style></aside>
 </section>
-<section id="use-sunpy" class="slide level2">
-<h2>Use sunpy!</h2>
+<section id="solar-physics-in-python-with-sunpy" class="slide level2">
+<h2>Solar Physics in Python with <code>sunpy</code>!</h2>
 <p><em>“The community-developed, free and open-source solar data analysis environment for Python.”</em></p>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div class="r-stack">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="static/tour.svg" width="1300"></p>
+<p><img data-src="static/tour.svg" class="fragment" width="1750"></p>
 </figure>
 </div>
-</div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="static/astropy_logo.png" class="fragment" width="300"></p>
+</figure>
 </div>
 </div>
 <aside class="notes">
@@ -495,6 +502,7 @@ Stuart Mumford
 <li>Intro to project</li>
 <li>Built on Astropy</li>
 <li>Brief history</li>
+<li>Add overlay of astropy logo</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -541,7 +549,7 @@ Stuart Mumford
       }</style></aside>
 </section>
 <section id="searching-for-data-with-sunpy" class="slide level2">
-<h2>Searching for Data with SunPy</h2>
+<h2>Searching for Data with <code>sunpy</code></h2>
 <div class="cell columns column-output-location" data-execution_count="2">
 <div class="column">
 <div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode numberSource python code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1"></a><span class="im">from</span> sunpy.net <span class="im">import</span> Fido, attrs <span class="im">as</span> a</span>
@@ -558,7 +566,7 @@ Stuart Mumford
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="4,5,6,7,8" data-code-annotation="1">Search remote repository for AIA 171 Å images between 18:00 and 18:10 on May 29 2018.</span>
+<span data-code-lines="4,5,6,7,8" data-code-annotation="1" data-code-cell="annotated-cell-1">Search remote repository for AIA 171 Å images between 18:00 and 18:10 on May 29 2018.</span>
 </dd>
 </dl>
 </div>
@@ -587,7 +595,7 @@ Total estimated size: 67.789 Mbyte
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="2">Download all FITS files corresponding to this search result to <code>data/AIA</code>.</span>
+<span data-code-lines="1" data-code-annotation="2" data-code-cell="annotated-cell-2">Download all FITS files corresponding to this search result to <code>data/AIA</code>.</span>
 </dd>
 </dl>
 </div>
@@ -598,26 +606,26 @@ Total estimated size: 67.789 Mbyte
 </div>
 </section>
 <section id="loading-data-with-sunpy" class="slide level2">
-<h2>Loading Data with SunPy</h2>
-<div class="cell" data-execution_count="4">
+<h2>Loading Data with <code>sunpy</code></h2>
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> sunpy.<span class="bu">map</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a></span>
 <span id="cb3-3"><a href="#cb3-3"></a>m <span class="op">=</span> sunpy.<span class="bu">map</span>.Map(files)</span>
 <span id="cb3-4"><a href="#cb3-4"></a>m.peek()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-execution_count="4">
+<div class="cell fragment" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="slides_files/figure-revealjs/cell-5-output-1.png" width="561" height="454"></p>
+<p><img data-src="slides_files/figure-revealjs/cell-6-output-1.png" width="561" height="454"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="loading-data-with-sunpy-1" class="slide level2">
-<h2>Loading Data with SunPy</h2>
-<div class="cell columns column-output-location" data-execution_count="5">
+<section id="inspecting-data-with-sunpy" class="slide level2">
+<h2>Inspecting Data with <code>sunpy</code></h2>
+<div class="cell columns column-output-location" data-execution_count="6">
 <div class="column">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="bu">print</span>(m.detector)</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="bu">print</span>(m.wavelength)</span>
@@ -633,7 +641,7 @@ Total estimated size: 67.789 Mbyte
 </div>
 </div>
 </div>
-<div class="cell columns column-output-location" data-execution_count="6">
+<div class="cell columns column-output-location" data-execution_count="7">
 <div class="column">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">from</span> astropy.coordinates <span class="im">import</span> SkyCoord</span>
 <span id="cb6-2"><a href="#cb6-2"></a></span>
@@ -649,13 +657,13 @@ Total estimated size: 67.789 Mbyte
 <pre><code>PixelPair(x=&lt;Quantity 1425.73662106 pix&gt;, y=&lt;Quantity 2049.01122848 pix&gt;)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img data-src="slides_files/figure-revealjs/cell-7-output-2.png" width="548" height="454"></p>
+<p><img data-src="slides_files/figure-revealjs/cell-8-output-2.png" width="548" height="454"></p>
 </div>
 </div>
 </div>
 </section>
 <section id="transforming-data-with-sunpy" class="slide level2">
-<h2>Transforming Data with SunPy</h2>
+<h2>Transforming Data with <code>sunpy</code></h2>
 <aside class="notes">
 <p>Show something here about how we need to correct for rotation of the Sun, observers at different location/different coordinate systems</p>
 <style type="text/css">
@@ -670,29 +678,28 @@ Total estimated size: 67.789 Mbyte
           display:block!important;
       }</style></aside>
 </section>
-<section id="analyzing-data" class="slide level2">
-<h2>Analyzing Data</h2>
-<aside class="notes">
-<p>Maybe just show basic infographic of</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
 <section id="challenging-at-scale" class="slide level2">
 <h2>Challenging at Scale</h2>
+<div>
 <ul>
-<li>Many timesteps means many files</li>
-<li>Hard to download, hard to deliver</li>
-<li>FITS files are not cloud ready</li>
+<li class="fragment">Analyzing time-dynamics of plasma requires many files
+<ul>
+<li class="fragment">Delivering and downloading many individual files to users is difficult</li>
+<li class="fragment"><span class="math inline">\(12\,\mathrm{h}/12\,\mathrm{s}\times6=21,600\)</span> files</li>
+</ul></li>
+<li class="fragment">Instantiating many rich <code>Map</code> objects is difficult
+<ul>
+<li class="fragment"><span class="math inline">\(\approx130\)</span> MB per file, <span class="math inline">\(\approx3\)</span> TB per dataset</li>
+<li class="fragment">Even analyzing a subset of the data requires loading the whole image</li>
+</ul></li>
+<li class="fragment">Lots of processing required to align and stack images into “data cubes”
+<ul>
+<li class="fragment">Large computing burden placed on user</li>
+<li class="fragment">Physical constraints make “analysis-ready” data products challenging</li>
+</ul></li>
+<li class="fragment">Trade-off between exploratory data analysis and “batch processing”</li>
 </ul>
+</div>
 </section>
 <section id="heliocloudscience-platform-for-heliophysics" class="slide level2">
 <h2>HelioCloud–Science Platform for Heliophysics</h2>
@@ -702,7 +709,7 @@ Total estimated size: 67.789 Mbyte
 <li>NASA-funded <strong>common data analysis environment for heliophysics</strong> on AWS</li>
 <li>Aligns with NASA <strong>Transform to Open Science (TOPS)</strong> initiative</li>
 <li><strong>Jupyter Lab</strong> interface + custom VM instances</li>
-<li>~1 Pb of heliophysics data <strong>colocated</strong> in S3</li>
+<li>~1 Pb of heliophysics data in S3 storage–data and compute are <strong>colocated</strong></li>
 <li>Open to NASA scientists + collaborators–<strong>no NASA credentials needed</strong></li>
 <li><strong>Dask Gateway</strong> for easy cluster provisioning</li>
 </ul>
