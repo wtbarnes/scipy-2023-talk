@@ -115,7 +115,7 @@ os.environ["PARFIVE_HIDE_PROGRESS"] = "True"
 ```{python}
 #| echo: true
 #| output-location: column-fragment
-#| eval: false
+#| eval: true
 from sunpy.net import Fido, attrs as a
 import astropy.units as u
 
@@ -131,7 +131,7 @@ print(query)
 ```{python}
 #| echo: true
 #| output-location: column-fragment
-#| eval: false
+#| eval: true
 files = Fido.fetch(query, path='data/{instrument}') # <2>
 print(files)
 ```
@@ -140,9 +140,9 @@ print(files)
 ## Loading Data with `sunpy`
 
 ```{python}
-#if len(files) == 0:
-import astropy.units as u
-files = glob.glob('data/AIA/*.fits')
+# keeps things from falling over if the download fails (which it does often)
+if len(files) == 0:
+  files = glob.glob('data/AIA/*.fits')
 ```
 
 ```{python}
@@ -181,6 +181,25 @@ m_cutout.peek()
 ```
 
 ## Transforming Data with `sunpy`
+
+```{python}
+#| eval: true
+#| echo: false
+import pathlib
+import astropy.time
+if list(pathlib.Path('data/sequence/').glob('*.fits')):
+  interval = 24*u.h
+  midpoint = astropy.time.Time('2018-05-29 18:00:00', scale='utc')
+  time_start = midpoint-interval/2
+  time_end = midpoint+interval/2
+  q = Fido.search(
+      a.Time(time_start, time_end),
+      a.Sample(6*u.h),
+      a.Wavelength(171*u.AA),
+      a.Instrument.aia,
+  )
+  file_seq = Fido.fetch(q, path='data/sequence',)
+```
 
 ```{python}
 #| output: true
