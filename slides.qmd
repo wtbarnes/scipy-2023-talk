@@ -34,6 +34,7 @@ code-annotations: below
 - Can study our star in greater detail than any other
 - Impact on space weather on the earth
 - A laboratory for astrophysics, fundamental plasma physics, and more!
+- Primary focus is the solar atmosphere
 :::
 
 # {background-image="static/corona_image.png"}
@@ -60,13 +61,13 @@ Image Credit: [NASA APOD/Reinhold Wittich](https://apod.nasa.gov/apod/ap230516.h
 - Plasma trapped along field lines
 - Twisted magnetic field releases energy into the plasma, thereby heating it
 - We can start to understand this system by observing these areas of intense magnetic activity at different wavelengths as a function of time
-- There's a lot of data and we need tools to wrangle and analyze all of this data
 - AIA
   - 12 s cadence
   - 7 EUV channels
   - 4K-by-4K images
   - 2010--now
   - Produces ~2 TB / day (!)
+- There's a lot of data and we need tools to wrangle and analyze all of this data
 :::
 
 ## Solar Physics in Python with `sunpy`!
@@ -187,7 +188,7 @@ m_cutout.peek()
 #| echo: false
 import pathlib
 import astropy.time
-if list(pathlib.Path('data/sequence/').glob('*.fits')):
+if not list(pathlib.Path('data/sequence/').glob('*.fits')):
   interval = 24*u.h
   midpoint = astropy.time.Time('2018-05-29 18:00:00', scale='utc')
   time_start = midpoint-interval/2
