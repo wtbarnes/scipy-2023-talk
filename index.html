@@ -8,7 +8,7 @@
 <link href="slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.433">
+  <meta name="generator" content="quarto-1.3.361">
 
   <title>Seeing the Sun through the Clouds: Accelerating the SunPy Data Analysis Ecosystem with Dask</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -430,23 +430,13 @@ Stuart Mumford
 </section>
 <section id="what-is-solar-physics" class="title-slide slide level1 center" data-background-video="https://svs.gsfc.nasa.gov/vis/a030000/a030000/a030072/heliophysics_fleet_capture_erup_cme_1280x720.mp4" data-background-video-loop="true" data-background-video-muted="true">
 <h1><span style="color:white;">What is solar physics?</span></h1>
-
-</section>
-
-<section>
-<section id="section" class="title-slide slide level1 center" data-background-image="static/corona_image.png">
-<h1></h1>
-<div class="footer">
-<p>Image Credit: <a href="https://apod.nasa.gov/apod/ap230516.html">NASA APOD/Reinhold Wittich</a></p>
-</div>
-</section>
-<section id="why-is-the-corona-so-hot" class="slide level2">
-<h2>Why is the Corona So Hot?</h2>
 <aside class="notes">
 <ul>
-<li>Show 1600 Å and 171 Å images</li>
-<li>Denote corresponding temperatures</li>
-<li>Note that temperature increases from surface to corona</li>
+<li>Astronomy/astrophysics of the Sun</li>
+<li>Can study our star in greater detail than any other</li>
+<li>Impact on space weather on the earth</li>
+<li>A laboratory for astrophysics, fundamental plasma physics, and more!</li>
+<li>Primary focus is the solar atmosphere</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -459,7 +449,35 @@ Stuart Mumford
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</section></section>
+</section>
+
+<section id="section" class="title-slide slide level1 center" data-background-image="static/corona_image.png">
+<h1></h1>
+<div class="footer">
+<p>Image Credit: <a href="https://apod.nasa.gov/apod/ap230516.html">NASA APOD/Reinhold Wittich</a></p>
+</div>
+<aside class="notes">
+<ul>
+<li>Humans have observed eclipses for many thousands of years</li>
+<li>Corona visible to naked eye only during eclipses</li>
+<li>Note that temperature increases from surface to corona by many orders of magnitude</li>
+<li>But why? how?</li>
+<li>Why is the Corona So Hot?</li>
+<li>To solve this, we don’t need to wait for eclipses anymore…(lead into EUV observations)</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+
 <section id="section-1" class="title-slide slide level1 center" data-background-video="https://api.helioviewer.org/cache/movies/2023/07/10/1SDn5/2018_05_29_00_07_33_2018_05_30_00_02_45_AIA_171.mp4" data-background-video-loop="true" data-background-video-muted="true">
 <h1></h1>
 
@@ -469,7 +487,21 @@ Stuart Mumford
 <section id="section-2" class="title-slide slide level1 center" data-background-video="https://api.helioviewer.org/cache/movies/2023/07/10/WSDn5/2018_05_29_00_07_34_2018_05_30_00_02_58_AIA_211.mp4" data-background-video-loop="true" data-background-video-muted="true">
 <h1></h1>
 <aside class="notes">
-
+<ul>
+<li>Magnetic field holds the key to why the corona is heated to million degree temperatures</li>
+<li>Plasma trapped along field lines</li>
+<li>Twisted magnetic field releases energy into the plasma, thereby heating it</li>
+<li>We can start to understand this system by observing these areas of intense magnetic activity at different wavelengths as a function of time</li>
+<li>AIA
+<ul>
+<li>12 s cadence</li>
+<li>7 EUV channels</li>
+<li>4K-by-4K images</li>
+<li>2010–now</li>
+<li>Produces ~2 TB / day (!)</li>
+</ul></li>
+<li>There’s a lot of data and we need tools to wrangle and analyze all of this data</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -497,6 +529,9 @@ Stuart Mumford
 </figure>
 </div>
 </div>
+<div class="footer">
+<p><a href="https://sunpy.org">sunpy.org</a> / <a href="https://github.com/sunpy/sunpy">github.com/sunpy/sunpy</a> / <a href="https://docs.sunpy.org">docs.sunpy.org</a></p>
+</div>
 <aside class="notes">
 <ul>
 <li>Intro to project</li>
@@ -516,8 +551,8 @@ Stuart Mumford
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-sunpy-project" class="slide level2">
-<h2>The SunPy Project</h2>
+<section id="the-sunpy-ecosystem" class="slide level2">
+<h2>The SunPy Ecosystem</h2>
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
@@ -566,7 +601,7 @@ Stuart Mumford
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-lines="4,5,6,7,8" data-code-annotation="1" data-code-cell="annotated-cell-1">Search remote repository for AIA 171 Å images between 18:00 and 18:10 on May 29 2018.</span>
+<span data-code-cell="annotated-cell-1" data-code-annotation="1" data-code-lines="4,5,6,7,8">Search remote repository for AIA 171 Å images between 18:00 and 18:10 on May 29 2018.</span>
 </dd>
 </dl>
 </div>
@@ -595,12 +630,16 @@ Total estimated size: 67.789 Mbyte
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-lines="1" data-code-annotation="2" data-code-cell="annotated-cell-2">Download all FITS files corresponding to this search result to <code>data/AIA</code>.</span>
+<span data-code-cell="annotated-cell-2" data-code-annotation="2" data-code-lines="1">Download all FITS files corresponding to this search result to <code>data/AIA</code>.</span>
 </dd>
 </dl>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>['data/AIA/aia_lev1_171a_2018_05_29t18_00_09_35z_image_lev1.fits']</code></pre>
+<pre><code>[]
+Errors:
+(&lt;parfive.results.Error object at 0x105b9f470&gt;
+https://sdo7.nascom.nasa.gov/cgi-bin/drms_export.cgi?series=aia__lev1;compress=rice;record=171_1306692047-1306692047,
+Timeout on reading data from socket)</code></pre>
 </div>
 </div>
 </div>
@@ -664,8 +703,55 @@ Total estimated size: 67.789 Mbyte
 </section>
 <section id="transforming-data-with-sunpy" class="slide level2">
 <h2>Transforming Data with <code>sunpy</code></h2>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="im">from</span> sunpy.coordinates <span class="im">import</span> propagate_with_solar_surface</span>
+<span id="cb8-2"><a href="#cb8-2"></a>m_seq <span class="op">=</span> sunpy.<span class="bu">map</span>.Map(<span class="st">'data/sequence/*.fits'</span>, sequence<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">4</span>))</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="cf">for</span> i, m <span class="kw">in</span> <span class="bu">enumerate</span>(m_seq):</span>
+<span id="cb8-5"><a href="#cb8-5"></a>  ax <span class="op">=</span> fig.add_subplot(<span class="dv">1</span>, <span class="bu">len</span>(m_seq), i<span class="op">+</span><span class="dv">1</span>, projection<span class="op">=</span>m)</span>
+<span id="cb8-6"><a href="#cb8-6"></a>  m.plot(axes<span class="op">=</span>ax)</span>
+<span id="cb8-7"><a href="#cb8-7"></a>  <span class="cf">with</span> propagate_with_solar_surface():</span>
+<span id="cb8-8"><a href="#cb8-8"></a>    blc <span class="op">=</span> m_cutout.bottom_left_coord.transform_to(m.coordinate_frame)</span>
+<span id="cb8-9"><a href="#cb8-9"></a>    trc <span class="op">=</span> m_cutout.top_right_coord.transform_to(m.coordinate_frame)</span>
+<span id="cb8-10"><a href="#cb8-10"></a>  m.draw_quadrangle(blc, top_right<span class="op">=</span>trc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides_files/figure-revealjs/cell-10-output-1.png" width="1283" height="343"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="transforming-data-with-sunpy-1" class="slide level2">
+<h2>Transforming Data with <code>sunpy</code></h2>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="|1,2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="cf">with</span> propagate_with_solar_surface():</span>
+<span id="cb9-2"><a href="#cb9-2"></a>  m_seq_aligned <span class="op">=</span> sunpy.<span class="bu">map</span>.Map([m.reproject_to(m_cutout.wcs) <span class="cf">for</span> m <span class="kw">in</span> m_seq], sequence<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">4</span>))</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="cf">for</span> i, m <span class="kw">in</span> <span class="bu">enumerate</span>(m_seq_aligned):</span>
+<span id="cb9-5"><a href="#cb9-5"></a>  ax <span class="op">=</span> fig.add_subplot(<span class="dv">1</span>,<span class="bu">len</span>(m_seq_aligned), i<span class="op">+</span><span class="dv">1</span>, projection<span class="op">=</span>m)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>  m.plot(axes<span class="op">=</span>ax, cmap<span class="op">=</span><span class="st">'sdoaia171'</span>, title<span class="op">=</span>m_seq[i].date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="slides_files/figure-revealjs/cell-11-output-1.png" width="1273" height="340"></p>
+</figure>
+</div>
+</div>
+</div>
+<div>
+<ul>
+<li class="fragment">Align all images to the <strong>World Coordinate System (WCS)</strong> of the cutout</li>
+<li class="fragment">Removes motion due to observer shift, rotatation of the Sun</li>
+</ul>
+</div>
 <aside class="notes">
-<p>Show something here about how we need to correct for rotation of the Sun, observers at different location/different coordinate systems</p>
+
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -682,7 +768,7 @@ Total estimated size: 67.789 Mbyte
 <h2>Challenging at Scale</h2>
 <div>
 <ul>
-<li class="fragment">Analyzing time-dynamics of plasma requires many files
+<li class="fragment">Analyzing time-dynamics of plasma requires <strong>many files</strong>
 <ul>
 <li class="fragment">Delivering and downloading many individual files to users is difficult</li>
 <li class="fragment"><span class="math inline">\(12\,\mathrm{h}/12\,\mathrm{s}\times6=21,600\)</span> files</li>
@@ -692,12 +778,12 @@ Total estimated size: 67.789 Mbyte
 <li class="fragment"><span class="math inline">\(\approx130\)</span> MB per file, <span class="math inline">\(\approx3\)</span> TB per dataset</li>
 <li class="fragment">Even analyzing a subset of the data requires loading the whole image</li>
 </ul></li>
-<li class="fragment">Lots of processing required to align and stack images into “data cubes”
+<li class="fragment">Lots of processing required to <strong>align and stack images into “data cubes”</strong>
 <ul>
 <li class="fragment">Large computing burden placed on user</li>
 <li class="fragment">Physical constraints make “analysis-ready” data products challenging</li>
 </ul></li>
-<li class="fragment">Trade-off between exploratory data analysis and “batch processing”</li>
+<li class="fragment">Trade-off between <strong>exploratory data analysis</strong> and “batch processing”</li>
 </ul>
 </div>
 </section>
@@ -742,17 +828,59 @@ Total estimated size: 67.789 Mbyte
 </section>
 <section id="some-painpoints-remain" class="slide level2">
 <h2>Some painpoints remain…</h2>
+<div>
 <ul>
-<li>Making a Dask array from a FITS array lazily is still hard</li>
-<li>Awkward interface between “Dask aware” operations and custom functions implemented using lower-level Dask operations</li>
-<li>Incompatibility between xarray and WCS approaches to coordinates systems</li>
-<li>Incompatibility between astropy units and Dask, i.e.&nbsp;cannot have a <code>Quantity</code> backed by a Dask array</li>
+<li class="fragment">Directly instantiating <code>Map</code> objects backed by Dask arrays is awkward
+<ul>
+<li class="fragment">Creating Dask arrays from FITS files is awkward</li>
+<li class="fragment"><code>Map</code> does not have “first-class” support for S3 URLs</li>
+</ul></li>
+<li class="fragment">Some <code>Map</code> methods still require “eager” execution
+<ul>
+<li class="fragment">Requires writing custom <code>@dask.delayed</code> functions that reimplement existing methods</li>
+<li class="fragment">Friction when moving from local/in-memory environment to parallel/distributed environment</li>
+</ul></li>
+<li class="fragment">Incompatibility between <code>xarray</code> and WCS approaches to coordinates systems</li>
+<li class="fragment">Friction between <code>astropy.units</code> and Dask
+<ul>
+<li class="fragment">Cannot have a <code>Quantity</code> backed by a Dask array</li>
+<li class="fragment">Dask does not correctly serialize <code>Quantity</code> objects</li>
+</ul></li>
 </ul>
+</div>
+<aside class="notes">
+<ul>
+<li>Maybe reference particular issues/PRs that are addressing these painpoints? across astropy, dask, sunpy</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
-
-<img src="static/sunpy_logo_landscape.svg" class="slide-logo r-stretch"><div class="footer footer-default">
+<ul>
+<li>Analyzing solar physics data requires <strong>large volumes</strong> (<span class="math inline">\(\sim\)</span> TB), <strong>many files</strong> (<span class="math inline">\(&gt;10^4\)</span>)</li>
+<li><strong>SunPy Ecosystem</strong> provide Python tools for searching for, loading, transforming, and analyzing solar data</li>
+<li>HelioCloud platform eliminates need for data download, <strong>brings data to compute</strong>, provides scalable compute via AWS and Dask</li>
+<li>HelioCloud + <code>sunpy</code> + <code>dask</code> = Science result from L1 data in <strong>minutes</strong></li>
+<li>Challenges remain in reducing friction between Astronomy-in-Python ecosystem and Dask, but <strong>progress being made!</strong></li>
+<li>Resources
+<ul>
+<li>Website: <a href="https://sunpy.org">sunpy.org</a></li>
+<li>GitHub: <a href="https://github.com/sunpy/sunpy">github.com/sunpy/sunpy</a></li>
+</ul></li>
+<li>Built with <img data-src="static/quarto_logo.png" height="40"></li>
+</ul>
+<p><img src="static/sunpy_logo_landscape.svg" class="slide-logo"></p>
+<div class="footer footer-default">
 <p><a href="https://wtbarnes.github.io/scipy-2023-talk">wtbarnes.github.io/scipy-2023-talk</a></p>
 </div>
 </section></section>
